@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.nio.file.AccessDeniedException;
 
 @Service
 public class FolderItemService {
@@ -37,10 +36,11 @@ public class FolderItemService {
             }
 
            //  Create Folder
-            Item folder = new Item();
-            folder.setName(folderName);
-            folder.setType(ItemType.FOLDER);
-            folder.setPermissionGroup(group);
+            Item folder =Item.builder()
+                    .name(folderName)
+                    .type(ItemType.FOLDER)
+                    .permissionGroup(group)
+                    .build();
 
             // Save Folder
             Item savedFolder = itemRepository.save(folder);

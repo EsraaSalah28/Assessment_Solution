@@ -1,11 +1,14 @@
 package com.example.batch.controller;
 
 import com.example.batch.model.Item;
+import com.example.batch.service.FileItemService;
 import com.example.batch.service.FolderItemService;
 import com.example.batch.service.SpaceItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.AccessDeniedException;
 
 @RestController
 @RequestMapping("/api/items")
@@ -15,10 +18,12 @@ public class SpaceItemController {
     private  final SpaceItemService itemService;
 
     private final FolderItemService folderItemService ;
+    private final FileItemService fileItemService;
 
-    public SpaceItemController(SpaceItemService itemService, FolderItemService folderItemService) {
+    public SpaceItemController(SpaceItemService itemService, FolderItemService folderItemService, FileItemService fileItemService) {
         this.itemService = itemService;
         this.folderItemService = folderItemService;
+        this.fileItemService = fileItemService;
     }
 
 
@@ -39,6 +44,17 @@ public class SpaceItemController {
 
         Item folder = folderItemService.createFolder(spaceName,folderName,userEmail,groupName);
         return new ResponseEntity<>(folder, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/create-file")
+    public ResponseEntity<Item> createFile(
+            @RequestParam(name = "folderName") String folderName,
+            @RequestParam(name = "fileName") String fileName,
+            @RequestParam(name = "groupName", defaultValue = "admin") String  groupName,
+            @RequestParam(name = "userEmail") String userEmail) throws AccessDeniedException {
+
+        Item file = fileItemService.createFile(folderName, fileName, userEmail,groupName);
+        return new ResponseEntity<>(file, HttpStatus.CREATED);
     }
 }
 
