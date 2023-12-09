@@ -1,6 +1,7 @@
 package com.example.batch.service;
 
 import com.example.batch.model.*;
+import com.example.batch.repoistory.FileRepository;
 import com.example.batch.repoistory.ItemRepository;
 import com.example.batch.repoistory.PermissionGroupRepository;
 import com.example.batch.repoistory.PermissionRepository;
@@ -23,6 +24,9 @@ public class FileItemService {
     @Autowired
     private PermissionRepository permissionRepository;
 
+    @Autowired
+    private FileRepository fileRepository;
+
     public Item createFile(String folderName, String fileName, String userEmail,String groupName) throws AccessDeniedException {
         // Check if the user has the required permission for the folder
         PermissionGroup group = permissionGroupRepository.findByGroupName(groupName);
@@ -44,11 +48,22 @@ public class FileItemService {
                         .permissionGroup(group)
                 .build();
 
-
         // Save File
         return itemRepository.save(file);
 
 
 
     }
+
+    public Item viewFileMetadata(String fileName, String userEmail) {
+
+        Item fileMetadata = itemRepository.viewFileMetadata(fileName, userEmail);
+
+        if (fileMetadata == null) {
+            throw new EntityNotFoundException("File not found or user does not have access.");
+        }
+
+        return fileMetadata;
+    }
+
 }

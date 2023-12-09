@@ -21,8 +21,8 @@ public class File {
     @Lob
     private byte[] binaryData;
 
-    @OneToOne
-    @JoinColumn(name = "item_id")
+    @ManyToOne
+    @JoinColumn(name = "item_id",nullable = false)
     private Item item;
 
 

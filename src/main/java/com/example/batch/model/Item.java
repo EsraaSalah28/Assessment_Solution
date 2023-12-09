@@ -1,8 +1,10 @@
 package com.example.batch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Setter
@@ -22,5 +24,9 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "permission_group_id")
     private PermissionGroup permissionGroup;
+
+    @OneToMany(mappedBy = "item",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<File> files;
 
 }

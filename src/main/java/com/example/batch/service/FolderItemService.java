@@ -43,9 +43,8 @@ public class FolderItemService {
                     .build();
 
             // Save Folder
-            Item savedFolder = itemRepository.save(folder);
 
-            return savedFolder;
+            return itemRepository.save(folder);
         }
     }
 

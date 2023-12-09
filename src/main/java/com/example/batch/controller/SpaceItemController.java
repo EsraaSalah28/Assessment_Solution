@@ -15,13 +15,13 @@ import java.nio.file.AccessDeniedException;
 public class SpaceItemController {
 
 
-    private  final SpaceItemService itemService;
+    private  final SpaceItemService spaceItemService ;
 
     private final FolderItemService folderItemService ;
     private final FileItemService fileItemService;
 
-    public SpaceItemController(SpaceItemService itemService, FolderItemService folderItemService, FileItemService fileItemService) {
-        this.itemService = itemService;
+    public SpaceItemController( SpaceItemService spaceItemService, FolderItemService folderItemService, FileItemService fileItemService) {
+        this.spaceItemService = spaceItemService;
         this.folderItemService = folderItemService;
         this.fileItemService = fileItemService;
     }
@@ -32,7 +32,7 @@ public class SpaceItemController {
             @RequestParam(name = "spaceName", defaultValue = "stc-assessments") String spaceName,
             @RequestParam(name = "groupName", defaultValue = "admin") String groupName) {
 
-        Item space = itemService.createSpace(spaceName, groupName);
+        Item space = spaceItemService.createSpace(spaceName, groupName);
         return new ResponseEntity<>(space, HttpStatus.CREATED);
     }
     @PostMapping("/create-folder/{spaceName}/{folderName}")
@@ -55,6 +55,16 @@ public class SpaceItemController {
 
         Item file = fileItemService.createFile(folderName, fileName, userEmail,groupName);
         return new ResponseEntity<>(file, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/view-file-metadata")
+    public ResponseEntity<Item> viewFileMetadata(
+            @RequestParam(name = "fileName") String fileName,
+            @RequestParam(name = "userEmail") String userEmail) {
+
+        Item fileMetadata = fileItemService.viewFileMetadata(fileName, userEmail);
+        return new ResponseEntity<>(fileMetadata, HttpStatus.OK);
     }
 }
 
