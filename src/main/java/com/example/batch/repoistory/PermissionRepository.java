@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PermissionRepository extends JpaRepository<Permission, Long> {
      Permission findByUserEmailAndGroup(String userEmail, PermissionGroup group);
+     Permission findByUserEmail(String userEmail);
 }

@@ -4,10 +4,13 @@ import com.example.batch.model.Item;
 import com.example.batch.service.FileItemService;
 import com.example.batch.service.FolderItemService;
 import com.example.batch.service.SpaceItemService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.nio.file.AccessDeniedException;
 
 @RestController
@@ -51,9 +54,10 @@ public class SpaceItemController {
             @RequestParam(name = "folderName") String folderName,
             @RequestParam(name = "fileName") String fileName,
             @RequestParam(name = "groupName", defaultValue = "admin") String  groupName,
-            @RequestParam(name = "userEmail") String userEmail) throws AccessDeniedException {
+            @RequestParam(name = "userEmail") String userEmail,
+            @RequestParam(name = "file") byte[] fileData) throws AccessDeniedException {
 
-        Item file = fileItemService.createFile(folderName, fileName, userEmail,groupName);
+        Item file = fileItemService.createFile(folderName, fileName, userEmail,groupName,fileData);
         return new ResponseEntity<>(file, HttpStatus.CREATED);
     }
 
@@ -65,6 +69,20 @@ public class SpaceItemController {
 
         Item fileMetadata = fileItemService.viewFileMetadata(fileName, userEmail);
         return new ResponseEntity<>(fileMetadata, HttpStatus.OK);
+    }
+    @GetMapping("/{fileId}/download")
+    public ResponseEntity<byte[]> downloadFile(
+            @PathVariable Long fileId,
+
+            @RequestParam(name = "userEmail") String userEmail) throws AccessDeniedException, FileNotFoundException {
+
+        byte[] fileData = fileItemService.downloadFile(fileId, userEmail);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "filename");
+
+        return new ResponseEntity<>(fileData, headers, HttpStatus.OK);
     }
 }
 
