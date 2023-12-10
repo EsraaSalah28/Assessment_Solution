@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "110266b3-aa60-41df-99f5-ce47dc9ac642",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19459999"
+	},
+	"item": [
+		{
+			"name": "stc-space",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:8080/api/items/create-space"
+			},
+			"response": []
+		},
+		{
+			"name": "2-API folder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/items/create-folder/stc-assessments/backend?userEmail=user2@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"items",
+						"create-folder",
+						"stc-assessments",
+						"backend"
+					],
+					"query": [
+						{
+							"key": "userEmail",
+							"value": "user2@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3.API file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/items/create-file?folderName=backend &fileName=assessment.pdf&userEmail=user2@example.com&file=01010111100",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"items",
+						"create-file"
+					],
+					"query": [
+						{
+							"key": "folderName",
+							"value": "backend "
+						},
+						{
+							"key": "fileName",
+							"value": "assessment.pdf"
+						},
+						{
+							"key": "userEmail",
+							"value": "user2@example.com"
+						},
+						{
+							"key": "file",
+							"value": "01010111100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4.API metadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/items/view-file-metadata?fileName=assessment.pdf&userEmail=user2@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"items",
+						"view-file-metadata"
+					],
+					"query": [
+						{
+							"key": "fileName",
+							"value": "assessment.pdf"
+						},
+						{
+							"key": "userEmail",
+							"value": "user2@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.Api download",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/items/1/download?userEmail=user2@example.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"items",
+						"1",
+						"download"
+					],
+					"query": [
+						{
+							"key": "userEmail",
+							"value": "user2@example.com"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
