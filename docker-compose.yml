@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile.postgres
     ports:
       - "5432:5432"
+    networks:
+      - local
 
   spring-app:
     build:
@@ -14,6 +16,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    network_mode:  host
     depends_on:
       - postgres
+    networks:
+      - local
+networks:
+  local:
+    driver: bridge
