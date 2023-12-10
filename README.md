@@ -1,5 +1,5 @@
 # Assessment_Solution
 
-Assessment has *2 branches*
-master ---> for design API
-solutions---> sql+ problem solving +postman collectio
+Assessment has *2 branches* <br/>
+master ---> for design API  <br/>
+solutions---> sql+ problem solving +postman collection
